@@ -19,7 +19,7 @@
     "react-dom": "15.4.2",
     "spectacle": "^2.0.0"
   },
-  "devDependencies": {
+  "dependencies": {
     "babel-cli": "^6.16.0",
     "babel-core": "^6.18.0",
     "babel-eslint": "^7.0.0",
