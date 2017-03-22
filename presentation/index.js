@@ -18,6 +18,7 @@ import HelloWorld from '../components/hello-world';
 import HelloName from '../components/hello-name';
 import HelloNameInputtable from '../components/hello-name-inputtable';
 import Ticker from '../components/ticker';
+import FizzBuzzTicker from '../components/fizz-buzz-ticker';
 
 // Import image preloader util
 import preloader from "spectacle/lib/utils/preloader";
@@ -259,7 +260,7 @@ ReactDOM.render(<HelloName name="UBC" />, reactAppRoot);`
         </Slide>
 
         <Slide align="center flex-start" transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
-
+          Using lifecycle methods to set up and tear down our timer
       `}>
           <Heading size={1} lineHeight={1.5}>
             Ticker
@@ -290,9 +291,37 @@ ReactDOM.render(<HelloName name="UBC" />, reactAppRoot);`
   tick = () => this.setState({ ticks: this.state.ticks + 1 });
 }`
           } />
-
           <Ticker />
+        </Slide>
 
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          Conditional rendering
+
+          You can render different things depending on the input
+
+          Embed ternary operators within JSX
+        `}>
+        <Heading size={1} lineHeight={1.5}>
+          FizzBuzz
+        </Heading>
+          <CodePane lang="javascript" source={
+`class FizzBuzz extends React.Component {
+  render() {
+    const { number } = this.props;
+    if (number % 3 === 0 && number % 5 === 0) {
+      return <h1>FizzBuzz</h1>;
+    } else if (number % 3 === 0) {
+      return <h1>Fizz</h1>;
+    } else if (number % 5 === 0) {
+      return <h1>Buzz</h1>;
+    } else {
+      return <h1>{number}</h1>;
+    }
+  }
+}`
+          } />
+
+        <FizzBuzzTicker />
         </Slide>
 
       </Deck>

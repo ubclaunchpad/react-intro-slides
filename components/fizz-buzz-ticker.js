@@ -1,6 +1,7 @@
 import React from 'react';
+import FizzBuzz from './fizz-buzz';
 
-export default class Ticker extends React.Component {
+export default class FizzBuzzTicker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +20,7 @@ export default class Ticker extends React.Component {
   }
 
   render() {
-    return <h1>Ticks: {this.state.ticks}</h1>;
+    return <h1>Ticks: <FizzBuzz number={this.state.ticks} /></h1>;
   }
 
   tick = () => this.setState({ ticks: this.state.ticks + 1 });
