@@ -16,6 +16,8 @@ import {
 
 import HelloWorld from '../components/hello-world';
 import HelloName from '../components/hello-name';
+import HelloNameInputtable from '../components/hello-name-inputtable';
+import Ticker from '../components/ticker';
 
 // Import image preloader util
 import preloader from "spectacle/lib/utils/preloader";
@@ -82,8 +84,11 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
           Declarative - You tell React what you want, not how to do it
+            * easier to test
           Composable - Everything you make in React will be a component
+            * easier to divide concerns
           Reusable - Reuse components within a project, and on different platforms
+            * easier to start a project, and expand it later
 
           Popular in industry,
           Makes developer's life easier
@@ -108,16 +113,13 @@ export default class Presentation extends React.Component {
           Explain Component: render function, jsx
 
           Appear: ReactDOM
-
-          Appear: rendered component
-
-          From now on, will omit ReactDOM.render
       `}>
           <Heading size={1} lineHeight={2}>
             Hello World
           </Heading>
-          <CodePane source={
+          <CodePane lang="javascript" source={
 `import React from 'react';
+
 class HelloWorld extends React.Component {
   render() {
     return <h1>Hello, world!</h1>;
@@ -126,8 +128,9 @@ class HelloWorld extends React.Component {
           } />
 
           <Appear>
-            <CodePane source={
+            <CodePane lang="javascript" source={
 `import ReactDOM from 'react-dom';
+
 let reactAppRoot = document.getElementById('root');
 ReactDOM.render(<HelloWorld />, reactAppRoot);`
             } />
@@ -139,12 +142,22 @@ ReactDOM.render(<HelloWorld />, reactAppRoot);`
 
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
           Props are how data is transferred between components
+
+          Indicate props when declaring a component
+          Whenever the parent component changes, the child will be rerendered
+          with the new props.
+
+          NOTE: props are readonly
+          props always flow downward, from parent to child
+
+          From now on, will omit ReactDOM.render and imports
       `}>
           <Heading size={1} lineHeight={2}>
             Props!
           </Heading>
-          <CodePane source={
+          <CodePane lang="javascript" source={
 `import React from 'react';
+
 class HelloName extends React.Component {
   render() {
     return <h1>Hello, {this.props.name}!</h1>;
@@ -152,13 +165,133 @@ class HelloName extends React.Component {
 }`
           } />
           <Appear>
-            <CodePane source={
+            <CodePane lang="javascript" source={
 `import ReactDOM from 'react-dom';
+
 let reactAppRoot = document.getElementById('root');
 ReactDOM.render(<HelloName name="UBC" />, reactAppRoot);`
             } />
           </Appear>
           <HelloName name="UBC" />
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          State is how data is stored within a component.
+
+          A component can change its own state directly, which triggers a rerender
+          of that component.
+
+          * constructor
+          * setState
+          * onChange handler (arrow function)
+          * controlled component
+      `}>
+          <Heading size={1} lineHeight={2}>
+            State!
+          </Heading>
+          <CodePane lang="javascript" source={
+`class HelloNameInputtable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "UBC"
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <input value={this.state.name} onChange={this.handleChange} />
+        <HelloName name={this.state.name} />
+      </div>
+    );
+  }
+
+  handleChange = (event) => this.setState({name: event.target.value});
+}`
+          } />
+
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary">
+          <Heading size={1} lineHeight={2}>
+            Example
+          </Heading>
+          <HelloNameInputtable />
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+            React needs to know when the state changes
+            When you modify state directly, React doesn't know about it
+
+            Functional with respect to props/state.
+            same props + same state = same output to the DOM
+            argument to setState is merged with current state, not overridden
+        `}>
+          <Heading size={1} lineHeight={2}>
+            Notes on State
+          </Heading>
+          <List>
+            <ListItem>Never modify state directly</ListItem>
+            <ListItem>Components must be functional</ListItem>
+            <ListItem>State updates are merged</ListItem>
+          </List>
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          React provides hooks into the lifecycle of each component
+
+          AJAX/set up timer in componentDidMount
+          Can modify state or perform action when certain props are received
+
+          IMPORTANT: can tell React whether it should rerender this component
+      `}>
+          <Heading size={1} lineHeight={2} fit>
+            Component Lifecycle
+          </Heading>
+          <List>
+            <ListItem>Before and after mounting</ListItem>
+            <ListItem>Before and after updating</ListItem>
+            <ListItem>Upon receiving props</ListItem>
+            <ListItem>Before unmounting</ListItem>
+          </List>
+
+        </Slide>
+
+        <Slide align="center flex-start" transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+
+      `}>
+          <Heading size={1} lineHeight={1.5}>
+            Ticker
+          </Heading>
+          <CodePane lang="javascript" source={
+`class Ticker extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ticks: 0,
+      timer: null
+    };
+  }
+
+  componentDidMount() {
+    const timer = setInterval(this.tick, 1000);
+    this.setState({ timer });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.timer);
+  }
+
+  render() {
+    return <h1>Time: {this.state.ticks}</h1>;
+  }
+
+  tick = () => this.setState({ ticks: this.state.ticks + 1 });
+}`
+          } />
+
+          <Ticker />
 
         </Slide>
 
