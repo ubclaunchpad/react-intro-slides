@@ -6,8 +6,11 @@ import {
   Appear,
   CodePane,
   Deck,
+  Fill,
+  Fit,
   Heading,
   Image,
+  Layout,
   ListItem,
   List,
   Slide,
@@ -19,6 +22,9 @@ import HelloName from '../components/hello-name';
 import HelloNameInputtable from '../components/hello-name-inputtable';
 import Ticker from '../components/ticker';
 import FizzBuzzTicker from '../components/fizz-buzz-ticker';
+import AnimalList from '../components/animal-list';
+import FunctionalButton from '../components/functional-button';
+import VeryStylishButton from '../components/very-stylish-button';
 
 // Import image preloader util
 import preloader from "spectacle/lib/utils/preloader";
@@ -33,6 +39,8 @@ require("spectacle/lib/themes/default/index.css");
 
 const images = {
   lp: require("../assets/launch-pad.png"),
+  internalState: require("../assets/react-internal-state.png"),
+  externalState: require("../assets/react-external-state.png"),
   react: require("../assets/react.png")
 };
 
@@ -285,7 +293,7 @@ ReactDOM.render(<HelloName name="UBC" />, reactAppRoot);`
   }
 
   render() {
-    return <h1>Time: {this.state.ticks}</h1>;
+    return <h1>Ticks: {this.state.ticks}</h1>;
   }
 
   tick = () => this.setState({ ticks: this.state.ticks + 1 });
@@ -294,7 +302,7 @@ ReactDOM.render(<HelloName name="UBC" />, reactAppRoot);`
           <Ticker />
         </Slide>
 
-        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+        <Slide align="center flex-start" transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
           Conditional rendering
 
           You can render different things depending on the input
@@ -320,8 +328,196 @@ ReactDOM.render(<HelloName name="UBC" />, reactAppRoot);`
   }
 }`
           } />
+          <Appear>
+            <CodePane lang="javascript" source={
+  `class Ticker extends React.Component {
+    // ...
+    render() {
+      return <h1>Ticks: <FizzBuzz number={this.state.ticks} /></h1>;
+    }
+    // ...
+  }`
+            } />
+          </Appear>
 
         <FizzBuzzTicker />
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          You can define what props that are expected within the component using proptypes.
+          You can define defaults to use when props are not provided using defaultProps.
+
+          Will warn when unexpected props are passed, in dev mode
+
+          propTypes document how to use your component too!
+        `}>
+        <Heading size={1} lineHeight={2} fit>
+          Prop Types and Default Props
+        </Heading>
+        <CodePane lang="javascript" source={
+`class HelloName extends React.Component { ... }
+
+HelloName.propTypes = { name: React.PropTypes.string };
+HelloName.defaultProps = { name: "UBC" };`
+        } />
+
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          Can use map function to render lists of data
+          Each element requires a key prop, so React can do efficient diffs
+        `}>
+          <Heading size={1} lineHeight={1.5} fit>
+            Lists and Enumeration
+          </Heading>
+          <CodePane lang="javascript" source={
+`import React, { Component, PropTypes } from 'react';
+
+class AnimalList extends Component {
+  static propTypes = { animals: PropTypes.arrayOf(PropTypes.string) };
+  static defaultProps = { animals: ['Ant', 'Bear', 'Camel', 'Duck'] };
+
+  render() {
+    return (
+      <ul>
+        {this.props.animals.map(this.renderListItem)}
+      </ul>
+    );
+  }
+
+  renderListItem = (animal) => (
+    <li key={animal}>{animal}</li>
+  );
+}`
+          } />
+          <Layout>
+            <Fill />
+            <Fit>
+              <AnimalList />
+            </Fit>
+            <Fill />
+          </Layout>
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          Stateless components can be written directly as functions
+          Can add propTypes/defaultProps with dot notation
+
+          Don't have access to lifecycle methods anymore
+
+          Just JSX, so components are not restricted to React.
+        `}>
+        <Heading size={1} lineHeight={1.5} fit>
+          Functional Components
+        </Heading>
+        <CodePane lang="javascript" source={
+`const FunctionalButton = (props) => (
+  <button onClick={props.onClick}>
+    {props.label}
+  </button>
+);
+
+FunctionalButton.propTypes = {
+  label: PropTypes.string,
+  onClick: PropTypes.func
+};
+
+ReactDOM.render(
+  <FunctionalButton
+    label="I am a button"
+    onClick={() => alert('You clicked a button. Good job...')} />,
+  document.getElementById('root')
+)`
+        } />
+        <div style={{ padding: 32 }}>
+          <FunctionalButton label="I am a button" onClick={() => alert('You clicked a button. Good job...')} />
+        </div>
+        </Slide>
+
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          You can use regular CSS
+          Or you can use inline styles
+          Logic (JS), Structure (HTML), and Style (CSS) together in single component
+          Easily modify style inline based on props or state
+
+          Modify our button to have a custom style
+        `}>
+        <Heading size={1} lineHeight={1.5}>
+          Styles
+        </Heading>
+        <CodePane lang="javascript" source={
+`const styles = {
+  borderRadius: 12,
+  borderStyle: 'solid',
+  borderColor: 'blue',
+  backgroundColor: 'blue',
+  padding: 16
+};
+
+const VeryStylishButton = (props) => (
+  <button style={styles} onClick={props.onClick}>
+    {props.label}
+  </button>
+);`
+        } />
+
+        <div style={{ padding: 32 }}>
+          <VeryStylishButton label="I'm a stylish button" onClick={() => alert("I'm not a designer")} />
+        </div>
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+
+        `}>
+        <Heading size={1} lineHeight={1.5}>
+          Lifting State Up
+        </Heading>
+        <Layout>
+          <Appear>
+            <Image height={400} style={{ marginTop: 32 }} src={images.internalState.replace("/", "")} />
+          </Appear>
+          <Appear>
+            <Image height={400} style={{ marginTop: 32 }} src={images.externalState.replace("/", "")} />
+          </Appear>
+        </Layout>
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          JavaScript ecosystem is very complicated
+
+          Can be difficult to get started
+
+          Facebook provides a utility to bootstrap React apps
+
+          Configures Babel/Webpack to handle all the nasty transpilation
+        `}>
+        <Heading size={1} lineHeight={1.5} fit>
+          Starting a new Project
+        </Heading>
+        <Appear>
+          <CodePane lang="bash" source={
+`npm install -g create-react-app
+create-react-app app-name
+cd app-name
+npm start`
+          } />
+        </Appear>
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          create-react-app hides the complexity of the React/JavaScript ecosystem
+          Often can create entire app without going beyond this
+
+          When you are ready to have full control over build pipeline etc,
+          you can eject the app by running a single script.
+        `}>
+          <Heading size={1} lineHeight={1.5}>
+            That's all!
+          </Heading>
+          <Text>
+            A template app will be running on localhost and you can start writing components right away.
+          </Text>
         </Slide>
 
       </Deck>

@@ -9,6 +9,7 @@
   "react/jsx-indent-props": 0
   "react/jsx-closing-bracket-location": 0
   "no-magic-numbers": 0
+  "no-alert": 0
   "react/prefer-es6-class": 0
   "react/no-multi-comp": 0
   "react/sort-comp": 0
