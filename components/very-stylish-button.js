@@ -5,6 +5,7 @@ const styles = {
   borderStyle: 'solid',
   borderColor: 'blue',
   backgroundColor: 'blue',
+  color: 'white',
   padding: 16
 };
 

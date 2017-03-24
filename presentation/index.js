@@ -4,6 +4,9 @@ import React from "react";
 // Import Spectacle Core tags
 import {
   Appear,
+  BlockQuote,
+  // Code,
+  Cite,
   CodePane,
   Deck,
   Fill,
@@ -13,7 +16,12 @@ import {
   Layout,
   ListItem,
   List,
+  Quote,
   Slide,
+  // Table,
+  // TableItem,
+  // TableHeaderItem,
+  // TableRow,
   Text
 } from "spectacle";
 
@@ -41,7 +49,17 @@ const images = {
   lp: require("../assets/launch-pad.png"),
   internalState: require("../assets/react-internal-state.png"),
   externalState: require("../assets/react-external-state.png"),
-  react: require("../assets/react.png")
+  reactProps: require("../assets/react-props.png"),
+  reactState: require('../assets/react-state.png'),
+  reactLayout: require('../assets/react-layout.png'),
+  react: require("../assets/react.png"),
+  electron: require('../assets/electron.png'),
+  frameworks: require('../assets/frameworks.png'),
+  ios: require('../assets/ios.png'),
+  android: require('../assets/android.jpg'),
+  windows: require('../assets/windows.png'),
+  linux: require('../assets/linux.png'),
+  spock: require('../assets/spock.gif')
 };
 
 preloader(images);
@@ -67,8 +85,9 @@ export default class Presentation extends React.Component {
           <Image height={500} style={{ marginTop: 32 }} src={images.react.replace("/", "")} />
         </Slide>
         <Slide transition={["slide"]} bgColor="primary" notes={`
-          What is Launch Pad
-          What do we do
+          Student engineering team, we meet every Saturday and work on an array
+          of projects across iOS, Android, web, and data science. We will be recruiting
+          for the summer soon so if you are interested, keep an eye on our Facebook page.
       `}>
           <Heading size={1} fit lineHeight={1} textColor="tertiary">
             UBC Launch Pad
@@ -78,29 +97,35 @@ export default class Presentation extends React.Component {
           </Text>
           <Image height={400} style={{ marginTop: 32 }} src={images.lp.replace("/", "")} />
         </Slide>
-        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
-          Facebook definition
-      `}>
-          {/* needs work */}
-          <Heading size={1} lineHeight={2}>
-            What is React?
-          </Heading>
-          <List>
-            <ListItem>"JavaScript library for building user interfaces"</ListItem>
-            <ListItem>V in MVC</ListItem>
-            <ListItem>function: data -> html</ListItem>
-          </List>
-        </Slide>
-        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
-          Declarative - You tell React what you want, not how to do it
-            * easier to test
-          Composable - Everything you make in React will be a component
-            * easier to divide concerns
-          Reusable - Reuse components within a project, and on different platforms
-            * easier to start a project, and expand it later
 
-          Popular in industry,
-          Makes developer's life easier
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          Facebook definition: JavaScript library for building user interfaces
+      `}>
+          <Heading size={1} lineHeight={2}>
+            React
+          </Heading>
+          <BlockQuote>
+            <Quote textSize={42} textColor="secondary">JavaScript library for building user interfaces</Quote>
+            <Cite>Facebook</Cite>
+          </BlockQuote>
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          Facebook definition: JavaScript library for building user interfaces
+      `}>
+          <Heading size={1} lineHeight={2} fit>
+            Another JavaScript Framework?
+          </Heading>
+          <Layout>
+            <Image height={400} style={{ marginTop: 32 }} src={images.spock.replace("/", "")} />
+          </Layout>
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          Declarative - You tell React what you want, not how to do it: easier to test.
+          Composable - Everything you make in React will be a component: easier to divide concerns.
+          Reusable - Reuse components within a project, and on different platforms: easier to start a project, and expand it later.
+          Popular in industry and makes developers life easier.
       `}>
           <Heading size={1} lineHeight={2}>
             Benefits
@@ -113,15 +138,12 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
-          Start with a simple example
-
+          Let's start with a simple example.
           Note: I'm going to be using ES6 in my slides, as that's standard practice
           for React apps. If you're used to older versions of JavaScript and something
           is difficult to understand, feel free to let me know.
 
           Explain Component: render function, jsx
-
-          Appear: ReactDOM
       `}>
           <Heading size={1} lineHeight={2}>
             Hello World
@@ -135,7 +157,6 @@ class HelloWorld extends React.Component {
   }
 }`
           } />
-
           <Appear>
             <CodePane lang="javascript" source={
 `import ReactDOM from 'react-dom';
@@ -147,6 +168,17 @@ ReactDOM.render(<HelloWorld />, reactAppRoot);`
 
           <HelloWorld />
 
+        </Slide>
+
+
+        <Slide align="center flex-start" transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+
+        `}>
+          <Heading size={1} lineHeight={1.5}>
+            Props
+          </Heading>
+          <Text>How data is moved between components</Text>
+          <Image height={500} style={{ marginTop: 16 }} src={images.reactProps.replace("/", "")} />
         </Slide>
 
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
@@ -162,7 +194,7 @@ ReactDOM.render(<HelloWorld />, reactAppRoot);`
           From now on, will omit ReactDOM.render and imports
       `}>
           <Heading size={1} lineHeight={2}>
-            Props!
+            Hello Props
           </Heading>
           <CodePane lang="javascript" source={
 `import React from 'react';
@@ -185,18 +217,43 @@ ReactDOM.render(<HelloName name="UBC" />, reactAppRoot);`
         </Slide>
 
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          You can define what props that are expected within the component using proptypes.
+          You can define defaults to use when props are not provided using defaultProps.
+
+          Will warn when unexpected props are passed, in dev mode
+
+          propTypes document how to use your component too!
+        `}>
+        <Heading size={1} lineHeight={2} fit>
+          Prop Types and Default Props
+        </Heading>
+        <CodePane lang="javascript" source={
+`class HelloName extends React.Component { ... }
+
+HelloName.propTypes = { name: React.PropTypes.string };
+HelloName.defaultProps = { name: "UBC" };`
+        } />
+        </Slide>
+
+        <Slide align="center flex-start" transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+
+        `}>
+          <Heading size={1} lineHeight={1.5}>
+            State
+          </Heading>
+          <Text>How state is stored within components</Text>
+          <Image height={500} style={{ marginTop: 16 }} src={images.reactState.replace("/", "")} />
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
           State is how data is stored within a component.
 
           A component can change its own state directly, which triggers a rerender
           of that component.
-
-          * constructor
-          * setState
-          * onChange handler (arrow function)
-          * controlled component
+          Talk about setState, arrow function
       `}>
           <Heading size={1} lineHeight={2}>
-            State!
+            Hello State
           </Heading>
           <CodePane lang="javascript" source={
 `class HelloNameInputtable extends React.Component {
@@ -224,7 +281,7 @@ ReactDOM.render(<HelloName name="UBC" />, reactAppRoot);`
 
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary">
           <Heading size={1} lineHeight={2}>
-            Example
+            Demo
           </Heading>
           <HelloNameInputtable />
         </Slide>
@@ -344,26 +401,6 @@ ReactDOM.render(<HelloName name="UBC" />, reactAppRoot);`
         </Slide>
 
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
-          You can define what props that are expected within the component using proptypes.
-          You can define defaults to use when props are not provided using defaultProps.
-
-          Will warn when unexpected props are passed, in dev mode
-
-          propTypes document how to use your component too!
-        `}>
-        <Heading size={1} lineHeight={2} fit>
-          Prop Types and Default Props
-        </Heading>
-        <CodePane lang="javascript" source={
-`class HelloName extends React.Component { ... }
-
-HelloName.propTypes = { name: React.PropTypes.string };
-HelloName.defaultProps = { name: "UBC" };`
-        } />
-
-        </Slide>
-
-        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
           Can use map function to render lists of data
           Each element requires a key prop, so React can do efficient diffs
         `}>
@@ -424,13 +461,13 @@ FunctionalButton.propTypes = {
 
 ReactDOM.render(
   <FunctionalButton
-    label="I am a button"
+    label="I'm a button"
     onClick={() => alert('You clicked a button. Good job...')} />,
   document.getElementById('root')
 )`
         } />
         <div style={{ padding: 32 }}>
-          <FunctionalButton label="I am a button" onClick={() => alert('You clicked a button. Good job...')} />
+          <FunctionalButton label="I'm a button" onClick={() => alert('You clicked a button. Good job...')} />
         </div>
         </Slide>
 
@@ -452,6 +489,7 @@ ReactDOM.render(
   borderStyle: 'solid',
   borderColor: 'blue',
   backgroundColor: 'blue',
+  color: 'white',
   padding: 16
 };
 
@@ -468,10 +506,15 @@ const VeryStylishButton = (props) => (
         </Slide>
 
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
-
+          Up to now I've described state as existing within components.
+          In real apps this is usually not the case.
+          We use state containers outside the component hierarchy.
+          Components emit actions to change state.
+          State container emits events to let components know about state changes.
+          This enforces one-directional data flow.
         `}>
-        <Heading size={1} lineHeight={1.5}>
-          Lifting State Up
+        <Heading size={1} lineHeight={1.5} fit>
+          Separation of Component and State
         </Heading>
         <Layout>
           <Appear>
@@ -512,12 +555,177 @@ npm start`
           When you are ready to have full control over build pipeline etc,
           you can eject the app by running a single script.
         `}>
-          <Heading size={1} lineHeight={1.5}>
-            That's all!
+          <Heading size={1} lineHeight={1.5} fit>
+            ...And you're done
           </Heading>
           <Text>
             A template app will be running on localhost and you can start writing components right away.
           </Text>
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          All source JavaScript files are transpiled into a single bundle file.
+          Performance concerns.
+          index.html references JavaScript bundle and relevant CSS files.
+        `}>
+          <Heading size={1} lineHeight={1.5}>
+            App Layout
+          </Heading>
+          <Image height={400} style={{ marginTop: 32 }} src={images.reactLayout.replace("/", "")} />
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          Downside of React: must render app to DOM on load.
+          Isomorphic apps move the inital render to the server.
+          Leverage the fact that Node servers use JavaScript.
+        `}>
+        <Heading size={1} lineHeight={1.5} fit>
+          Isomorphic Applications
+        </Heading>
+        <List>
+          <ListItem>Faster page loads</ListItem>
+          <ListItem>Search Engine Optimization</ListItem>
+        </List>
+        <Appear>
+          <CodePane lang="html" source={
+`<div id="root"></div>`
+          } />
+        </Appear>
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          This is a Node server that serves a React app.
+        `}>
+        <Heading size={1} lineHeight={1.5}>
+          Example
+        </Heading>
+        <CodePane lang="javascript" source={
+`import http from 'http';
+import { renderToString } from 'react-dom/server';
+import MyAweomeReactApp from './path/to/component';
+
+const server = http.createServer((req, res) => {
+  const componentHTML = renderToString(<MyAweomeReactApp />);
+` + '  const html = `<!DOCTYPE html>' + `
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <title>Isomorphic Redux Demo</title>
+        </head>
+        <body>` +
+          '<div id="react-view">${componentHTML}</div>' + `
+          <script type="application/javascript" src="/bundle.js"></script>
+        </body>
+    </html>\`
+  return html;
+});
+
+server.listen(8000);`
+        } />
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          React is great for the web, but wouldn't it be great if we could
+          use it elsewhere. And use the same code for different platforms without
+          compromising on performance or UX?
+        `}>
+        <Heading size={1} lineHeight={1.5} fit>
+          Beyond the Web
+        </Heading>
+          <Image height={200} style={{ marginTop: 32 }} src={images.ios.replace("/", "")} />
+          <Image height={200} style={{ marginTop: 32 }} src={images.android.replace("/", "")} />
+          <Image height={200} style={{ marginTop: 32 }} src={images.windows.replace("/", "")} />
+          <Image height={200} style={{ marginTop: 32 }} src={images.linux.replace("/", "")} />
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          Web applications are pretty good these days, but they are limited by browser.
+          What if web applications had access to the same APIs as native apps.
+          Electron uses Chromium to render HTML, so you can use the same JSX tags as the web.
+          It uses NodeJS to access the filesystem etc.
+        `}>
+        <Heading size={1} lineHeight={1.5}>
+          Electron
+        </Heading>
+          <Image height={300} style={{ marginTop: 32 }} src={images.electron.replace("/", "")} />
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          This is all you need to start writing desktop apps with React.
+          Point the BrowserWindow to your app and it acts like a web server.
+          Electron provides APIs to interact with windows and menus.
+          You have access to everything that NodeJS provides.
+        `}>
+        <Heading size={1} lineHeight={1.5}>
+          Example
+        </Heading>
+          <CodePane lang="javascript" source={
+`const app = require('app');
+const BrowserWindow = require('browser-window');
+require('crash-reporter').start();
+
+app.on('ready', () => {
+  mainWindow = new BrowserWindow({width: 1360, height: 800});
+  mainWindow.loadUrl('file://' + __dirname + '/public/index.html');
+  mainWindow.openDevTools();
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
+});`
+          } />
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          We can also leverage React on iOS and Android using React Native.
+          JavaScript runs in separate thread.
+          Uses the same UI components as a native bridge, but rendering is handled
+          by React.
+        `}>
+        <Heading size={1} lineHeight={1.5}>
+          React Native
+        </Heading>
+          <List>
+            <ListItem>Native UI components</ListItem>
+            <ListItem>Rendering managed by React</ListItem>
+          </List>
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+          ScrollView provides a native scrollable view.
+          We use View rather than div and Text rather than p/h1.
+          React just mounts a native UI Component rather than a DOM node.
+        `}>
+        <Heading size={1} lineHeight={1.5}>
+          Example
+        </Heading>
+          <CodePane lang="javascript" source={
+`class NativeScroller extends Component {
+  render() {
+    return (
+      <ScrollView>
+        <Text>
+          On iOS, a React Native ScrollView uses a native UIScrollView.
+          On Android, it uses a native ScrollView.
+
+          On iOS, a React Native Image uses a native UIImageView.
+          On Android, it uses a native ImageView.
+
+          React Native wraps the fundamental native components, giving you
+          the performance of a native app, plus the clean design of React.
+        </Text>
+      </ScrollView>
+    );
+  }
+}`
+          } />
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="secondary" textColor="quartenary" notes={`
+
+        `}>
+        <Heading size={1} textColor="quartenary" lineHeight={1.5}>
+          That's all folks
+        </Heading>
         </Slide>
 
       </Deck>
