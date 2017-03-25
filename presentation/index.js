@@ -733,7 +733,7 @@ AppRegistry.registerComponent('ScrollerApp', () => ScrollerApp);
         <Heading size={1} lineHeight={1.5} fit>
           Starting a Native Project
         </Heading>
-        <CodePane lang="bash" souce={
+        <CodePane lang="bash" source={
 `npm install -g react-native cli
 react-native init my-app
 cd my-app
