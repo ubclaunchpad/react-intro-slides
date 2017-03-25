@@ -326,8 +326,7 @@ HelloName.defaultProps = { name: "UBC" };`
           </Heading>
           <CodePane lang="javascript" source={
 `class Ticker extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
     this.state = {
       ticks: 0,
       timer: null
@@ -522,9 +521,7 @@ const VeryStylishButton = (props) => (
           Separation of Component and State
         </Heading>
         <Layout>
-          <Appear>
-            <Image height={400} style={{ marginTop: 32 }} src={images.internalState.replace("/", "")} />
-          </Appear>
+          <Image height={400} style={{ marginTop: 32 }} src={images.internalState.replace("/", "")} />
           <Appear>
             <Image height={400} style={{ marginTop: 32 }} src={images.externalState.replace("/", "")} />
           </Appear>
@@ -551,20 +548,6 @@ npm start`
         </Slide>
 
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
-          create-react-app hides the complexity of the React/JavaScript ecosystem.
-          Often can create entire app without going beyond this.
-          But, when you are ready to have full control over build pipeline etc,
-          you can eject the app by running a single script.
-        `}>
-          <Heading size={1} lineHeight={1.5} fit>
-            ...And you're done
-          </Heading>
-          <Text>
-            A template app will be running on localhost and you can start making your app.
-          </Text>
-        </Slide>
-
-        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
           All source JavaScript files are transpiled into a single bundle file.
           Performance concerns.
           index.html references JavaScript bundle and relevant CSS files.
@@ -587,11 +570,9 @@ npm start`
           <ListItem>Faster page loads</ListItem>
           <ListItem>Search Engine Optimization</ListItem>
         </List>
-        <Appear>
-          <CodePane lang="html" source={
+        <CodePane lang="html" source={
 `<div id="root"></div>`
-          } />
-        </Appear>
+        } />
         </Slide>
 
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
@@ -619,7 +600,7 @@ const server = http.createServer((req, res) => {
           <script type="application/javascript" src="/bundle.js"></script>
         </body>
     </html>\`
-  return html;
+  res.send(html);
 });
 
 server.listen(8000);`
@@ -664,12 +645,10 @@ server.listen(8000);`
           <CodePane lang="javascript" source={
 `const app = require('app');
 const BrowserWindow = require('browser-window');
-require('crash-reporter').start();
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({width: 1360, height: 800});
   mainWindow.loadUrl('file://' + __dirname + '/public/index.html');
-  mainWindow.openDevTools();
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
