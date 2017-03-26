@@ -60,6 +60,7 @@ const images = {
   windows: require('../assets/windows.png'),
   linux: require('../assets/linux.png'),
   spock: require('../assets/spock.gif'),
+  slideShow: require('../assets/slide-show.png'),
   thatsAll: require('../assets/thats-all-folks.png')
 };
 
@@ -107,6 +108,7 @@ export default class Presentation extends React.Component {
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
           Facebook definition: JavaScript library for building user interfaces.
           That's great, but why should I care?
+          What's different about React.
       `}>
           <Heading size={1} lineHeight={2}>
             React
@@ -115,17 +117,6 @@ export default class Presentation extends React.Component {
             <Quote textSize={42} textColor="secondary">JavaScript library for building user interfaces</Quote>
             <Cite>Facebook</Cite>
           </BlockQuote>
-        </Slide>
-
-        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
-          Why do we need this?
-      `}>
-          <Heading size={1} lineHeight={2} fit>
-            Another JavaScript Framework?
-          </Heading>
-          <Layout>
-            <Image height={400} style={{ marginTop: 32 }} src={images.spock.replace("/", "")} />
-          </Layout>
         </Slide>
 
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
@@ -373,20 +364,16 @@ HelloName.defaultProps = { name: "UBC" };`
       return <h1>{number}</h1>;
     }
   }
+}
+
+class Ticker extends React.Component {
+  // ...
+  render() {
+    return <h1>Ticks: <FizzBuzz number={this.state.ticks} /></h1>;
+  }
+  // ...
 }`
           } />
-          <Appear>
-            <CodePane lang="javascript" source={
-  `class Ticker extends React.Component {
-    // ...
-    render() {
-      return <h1>Ticks: <FizzBuzz number={this.state.ticks} /></h1>;
-    }
-    // ...
-  }`
-            } />
-          </Appear>
-
         <FizzBuzzTicker />
         </Slide>
 
@@ -798,6 +785,22 @@ const Component = Platform.select({
 // Now can use component like <Component /> in JSX
 `
         } />
+        </Slide>
+
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary">
+          <Heading size={1} lineHeight={1.5} fit>
+            One Last Thing
+          </Heading>
+          <Text textSize={42} lineHeight={2}>You can use React to make slide decks too!</Text>
+          <CodePane lang="javascript" source={
+`<Slide transition={["slide"]} bgColor="primary" textColor="secondary">
+  <Heading size={1} lineHeight={1.5} fit>
+    One Last Thing
+  </Heading>
+  <Text textSize={32} lineHeight={2}>You can use React to make slide decks too!</Text>
+  <CodePane lang="javascript" source={srcString} />
+</Slide>`
+          } />
         </Slide>
 
         <Slide transition={["slide"]} bgColor="secondary" textColor="quartenary" notes={`
