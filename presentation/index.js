@@ -60,7 +60,6 @@ const images = {
   windows: require('../assets/windows.png'),
   linux: require('../assets/linux.png'),
   spock: require('../assets/spock.gif'),
-  slideShow: require('../assets/slide-show.png'),
   thatsAll: require('../assets/thats-all-folks.png')
 };
 
