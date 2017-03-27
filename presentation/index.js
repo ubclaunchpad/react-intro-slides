@@ -79,21 +79,15 @@ export default class Presentation extends React.Component {
   render() {
     return (
       <Deck transition={["zoom", "slide"]} transitionDuration={500} theme={theme}>
-        <Slide transition={["zoom"]} bgColor="secondary" notes={`
-          A couple questions before getting started
-          How many people are familiar with JavaScript?
-          How many people are familiar with ES6?
-          How many people are familiar with other FE frameworks like Angular, Ember, Vue etc.
-        `}>
+        <Slide transition={["zoom"]} bgColor="secondary">
           <Heading size={1} fit caps lineHeight={1} textColor="quartenary">
             Intro to React
           </Heading>
           <Image height={500} style={{ marginTop: 32 }} src={images.react.replace("/", "")} />
         </Slide>
         <Slide transition={["slide"]} bgColor="primary" notes={`
-          Student engineering team, we meet every Saturday and work on an array
-          of projects across iOS, Android, web, and data science. We will be recruiting
-          for the summer soon so if you are interested, keep an eye on our Facebook page.
+          Student engineering team. Meet every Saturday. iOS, Android, Web, Data Science.
+          Summer recruitment.
       `}>
           <Heading size={1} fit lineHeight={1} textColor="tertiary">
             UBC Launch Pad
@@ -105,7 +99,6 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
-          Facebook definition: JavaScript library for building user interfaces.
           That's great, but why should I care?
           What's different about React.
       `}>
@@ -164,7 +157,7 @@ ReactDOM.render(<HelloWorld />, reactAppRoot);`
         </Slide>
 
 
-        <Slide align="center flex-start" transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
           Props are how data is transferred between components.
           Indicate props when declaring a component.
           Props change triggers a rerender.
@@ -222,7 +215,7 @@ HelloName.defaultProps = { name: "UBC" };`
         } />
         </Slide>
 
-        <Slide align="center flex-start" transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
 
         `}>
           <Heading size={1} lineHeight={1.5}>
@@ -308,7 +301,7 @@ HelloName.defaultProps = { name: "UBC" };`
 
         </Slide>
 
-        <Slide align="center flex-start" transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
           Using lifecycle methods to set up and tear down our timer
       `}>
           <Heading size={1} lineHeight={1.5}>
@@ -342,7 +335,7 @@ HelloName.defaultProps = { name: "UBC" };`
           <Ticker />
         </Slide>
 
-        <Slide align="center flex-start" transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
+        <Slide transition={["slide"]} bgColor="primary" textColor="secondary" notes={`
           Conditional rendering.
           Embed ternary operators within JSX.
         `}>
